@@ -46,9 +46,13 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_edit) {
+        if (id == R.id.action_novo) {
             Intent intent = new Intent(MainActivity.this, CadastroNovoActivity.class);
             startActivity(intent);
+        }
+        else if (id == R.id.action_edit)
+        {
+            return  true;
         }
 
         return super.onOptionsItemSelected(item);

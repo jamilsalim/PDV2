@@ -4,15 +4,15 @@
     tools:context=".ui.MainActivity">
 
     <item
-        android:id="@+id/action_edit"
-        android:orderInCategory="100"
-        android:title="@string/action_edit"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_novo"
         android:orderInCategory="100"
         android:title="@string/action_novo"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_edit"
+        android:orderInCategory="100"
+        android:title="@string/action_edit"
         app:showAsAction="never" />
 
 </menu>
