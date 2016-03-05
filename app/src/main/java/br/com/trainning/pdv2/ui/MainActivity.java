@@ -6,11 +6,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import br.com.trainning.pdv2.R;
+import br.com.trainning.pdv2.domain.model.Produto;
+import se.emilsjolander.sprinkles.Query;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,9 +57,32 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (id == R.id.action_edit)
         {
-            return  true;
+            Intent intent = new Intent(MainActivity.this, EditarProdutoActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.d("Carregar", "Carregar lista");
+        List<Produto> produtoList = Query.all(Produto.class).get().asList();
+
+        if (produtoList != null)
+        {
+            for(Produto p: produtoList)
+            {
+                Log.d("Produto", "id-------------------->" + p.getId());
+                Log.d("Produto", "Descrição------------->" + p.getDescricao());
+                Log.d("Produto", "Unidade--------------->" + p.getUnidade());
+                Log.d("Produto", "Preço----------------->" + p.getPreco());
+                Log.d("Produto", "Código de Barras------>" + p.getCodigoBarras());
+                Log.d("Produto", "Código de Barras------>" + p.getFoto());
+                Log.d("Produto", "-----------------------------------------------------");
+            }
+        }
     }
 }
