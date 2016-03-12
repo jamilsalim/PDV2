@@ -57,6 +57,7 @@ public class MainActivity extends BaseActivity {
         zxingLibConfig = new ZXingLibConfig();
         zxingLibConfig.useFrontLight = true;
 
+        SimularCameraParaLerCodigoBarras();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +75,7 @@ public class MainActivity extends BaseActivity {
                 // set item background
                 openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
                 // set item width
-                openItem.setWidth(90);
+                openItem.setWidth(190);
                 // set item title
                 openItem.setTitle("Open");
                 // set item title fontsize
@@ -89,7 +90,7 @@ public class MainActivity extends BaseActivity {
                 // set item background
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
                 // set item width
-                deleteItem.setWidth(90);
+                deleteItem.setWidth(190);
                 // set a icon
                 deleteItem.setIcon(R.drawable.ic_remove_shopping_cart_white_36dp);
                 // add to menu
@@ -115,6 +116,8 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         });
+
+        popularLista();
     }
 
     @Override
@@ -182,7 +185,7 @@ public class MainActivity extends BaseActivity {
                 if (result != null) {
                     Log.d("SCANBARCODE", "BARCODE: " + result);
 
-                    Produto produto = Query.one(Produto.class, "select * from produto where CodigoBarra = ?", result).get();
+                    Produto produto = Query.one(Produto.class, "select * from Produto where CodigoBarra = ?", result).get();
 
                     if (produto != null)
                     {
@@ -192,6 +195,7 @@ public class MainActivity extends BaseActivity {
                         item.setIdProduto(produto.getCodigoBarras());
                         item.setQuantidade(1);
                         item.save();
+                        popularLista();
                     }
                     else
                     {
@@ -227,9 +231,31 @@ public class MainActivity extends BaseActivity {
             list.add(itemProduto);
             valorTotal+=item.getQuantidade()*produto.getPreco();
             quantidadeItens += item.getQuantidade();
+            itemProduto.save();
+            popularLista();
         }
-        getSupportActionBar().setTitle("PDV"+ valorTotal);
+        getSupportActionBar().setTitle("PDV "+ Util.getFormatedCurrency(String.valueOf(valorTotal)));
         adapter = new CustomArrayAdapter(this, R.layout.list_item, list);
         listView.setAdapter(adapter);
+    }
+
+    public void SimularCameraParaLerCodigoBarras()
+    {
+            Produto produto = Query.one(Produto.class, "select * from Produto where CodigoBarra = ?", "1").get();
+
+            if (produto != null)
+            {
+                Item item = new Item();
+                item.setId(0L);
+                item.setIdCompra(1L);
+                item.setIdProduto(produto.getCodigoBarras());
+                item.setQuantidade(1);
+                item.save();
+                popularLista();
+            }
+            else
+            {
+                Toast.makeText(MainActivity.this, "Produto não localizado !", Toast.LENGTH_SHORT).show();
+            }
     }
 }
