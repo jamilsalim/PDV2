@@ -3,6 +3,7 @@ package br.com.trainning.pdv2.ui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,6 +19,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import com.mapzen.android.lost.api.LocationListener;
+import com.mapzen.android.lost.api.LocationRequest;
+import com.mapzen.android.lost.api.LocationServices;
+import com.mapzen.android.lost.api.LostApiClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,18 +73,32 @@ public class EditarProdutoActivity extends BaseActivity implements ImageInputHel
 
         //Na versão do android 6 para cima precisa lançar um PopUp confirmando
         //a utilização da sua localização.
-        //LostApiClient lostApiClient = new LostApiClient.Builder(this).build();
-        //lostApiClient.connect();
+        /*LostApiClient lostApiClient = new LostApiClient.Builder(this).build();
+        lostApiClient.connect();
 
-        //Location location = LocationServices.FusedLocationApi.getLastLocation();
-        //if (location != null) {
-        //latidude = location.getLatitude();
-        //longitude = location.getLongitude();
-        //}
+        Location location = LocationServices.FusedLocationApi.getLastLocation();
+        if (location != null) {
+            latidude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+
+        LocationRequest request = LocationRequest.create()
+                .setInterval(5000)
+                .setSmallestDisplacement(10)
+                .setPriority(LocationRequest.PRIORITY_LOW_POWER);
+
+        LocationListener listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                latidude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
+        };
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(request, listener);*/
 
         Log.d("LOCALIZAÇÃO", "Latidude:" + latidude);
         Log.d("LOCALIZAÇÃO", "Longitude:" + longitude);
-
 
         imageInputHelper = new ImageInputHelper(this);
         imageInputHelper.setImageActionListener(this);
