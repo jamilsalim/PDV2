@@ -37,6 +37,15 @@ public class PdvApplication extends Application {
                                 "Longitude REAL"+
                                 ")"
                 );
+
+                db.execSQL(
+                        "CREATE TABLE Item (" +
+                                "id INTEGER PRIMARY KEY AUTOINCREMENT, "+
+                                "id_compra INTEGER, "+
+                                "id_produto TEXT, "+
+                                "quantidade INTEGER "+
+                                ")"
+                );
             }
 
             @Override
