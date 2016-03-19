@@ -34,7 +34,8 @@ public class PdvApplication extends Application {
                                 "CodigoBarra TEXT, "+
                                 "Foto TEXT, "+
                                 "Latitude REAL, "+
-                                "Longitude REAL"+
+                                "Longitude REAL,"+
+                                "Status INTEGER"+
                                 ")"
                 );
 
