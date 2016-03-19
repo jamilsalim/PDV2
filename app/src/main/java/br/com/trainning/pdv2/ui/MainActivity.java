@@ -275,7 +275,8 @@ public class MainActivity extends BaseActivity {
 
         callbackProdutos = new Callback<List<Produto>>() {
 
-            @Override public void success(List<Produto> resultado, Response response) {
+            @Override
+            public void success(List<Produto> resultado, Response response) {
 
                 List<Produto> lp = Query.all(Produto.class).get().asList();
 
@@ -292,7 +293,7 @@ public class MainActivity extends BaseActivity {
 
             @Override public void failure(RetrofitError error) {
 
-                Log.e("RETROFIT", "Error:"+error.getMessage());
+                Log.e("ERRO AO INSERIR", "Error NO WEB SERVICE:"+error.getMessage());
             }
         };
     }
