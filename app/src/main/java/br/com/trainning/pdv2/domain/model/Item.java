@@ -17,7 +17,7 @@ public class Item extends Model {
     @AutoIncrement
     private long id;
     @Column("id_compra")
-    private long idCompra;
+    private String idCompra;
     @Column("id_produto")
     private String idProduto;
     @Column("quantidade")
@@ -31,13 +31,9 @@ public class Item extends Model {
         this.id = id;
     }
 
-    public long getIdCompra() {
-        return idCompra;
-    }
+    public String getIdCompra() { return idCompra;}
 
-    public void setIdCompra(long idCompra) {
-        this.idCompra = idCompra;
-    }
+    public void setIdCompra(String idCompra) {this.idCompra = idCompra;}
 
     public String getIdProduto() {
         return idProduto;

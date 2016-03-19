@@ -1,13 +1,19 @@
 package br.com.trainning.pdv2.network;
 
+import android.support.design.widget.Snackbar;
+
 import java.util.List;
+
+import br.com.trainning.pdv2.domain.model.Compra;
 import br.com.trainning.pdv2.domain.model.Produto;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
+import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
@@ -72,5 +78,9 @@ public class APIClient {
                 @Field("longitude") double longitude,
                 Callback<String> callbackUpdateProduto
         );
+
+        @Headers( "Content-Type: application/json" )
+        @POST("/compra/cadastro")
+        void enviarCompra(@Body Compra compra, Callback<String> callbackCompra);
     }
 }

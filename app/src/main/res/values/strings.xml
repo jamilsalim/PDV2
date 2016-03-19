@@ -6,4 +6,5 @@
     <string name="title_activity_cadastro_novo">Cadastro Novo</string>
     <string name="title_activity_editar_produto">EditarProdutoActivity</string>
     <string name="sincronizar_produto">Sincronizar Produto</string>
+    <string name="fechar_compra">Fechar Compra</string>
 </resources>

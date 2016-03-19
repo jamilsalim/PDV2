@@ -1,6 +1,7 @@
 package br.com.trainning.pdv2.ui;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -29,12 +30,19 @@ import com.mapzen.android.lost.api.LostApiClient;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.List;
 
 import br.com.trainning.pdv2.R;
 import br.com.trainning.pdv2.domain.ImageInputHelper;
 import br.com.trainning.pdv2.domain.model.Produto;
+import br.com.trainning.pdv2.network.APIClient;
 import butterknife.Bind;
 import butterknife.OnClick;
+import dmax.dialog.SpotsDialog;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import se.emilsjolander.sprinkles.Query;
 
 public class CadastroNovoActivity extends BaseActivity implements ImageInputHelper.ImageActionListener {
 
@@ -58,6 +66,9 @@ public class CadastroNovoActivity extends BaseActivity implements ImageInputHelp
     ImageButton imageButtonCamera;
     @Bind(R.id.imageButtonGaleria)
     ImageButton imageButtonGaleria;
+
+    Callback<String> callbackNovoProduto;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +107,15 @@ public class CadastroNovoActivity extends BaseActivity implements ImageInputHelp
 
         LocationServices.FusedLocationApi.requestLocationUpdates(request, listener);*/
 
+        //Log.d("LOCALIZAÇÃO", "Latidude:" + latidude);
+        //Log.d("LOCALIZAÇÃO", "Longitude:" + longitude);
 
-        Log.d("LOCALIZAÇÃO", "Latidude:" + latidude);
-        Log.d("LOCALIZAÇÃO", "Longitude:" + longitude);
 
         imageInputHelper = new ImageInputHelper(this);
         imageInputHelper.setImageActionListener(this);
+
+        dialog = new SpotsDialog(this);
+        configureNovoProdutoCallback();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +146,11 @@ public class CadastroNovoActivity extends BaseActivity implements ImageInputHelp
                 produto.setLatitude(latidude);
                 produto.setLongitude(longitude);
                 produto.save();
-                Log.d("Gravar", "Gravado com sucesso");
-                finish();
+                dialog.show();
+                new APIClient().getRestService().createProduto(
+                        produto.getCodigoBarras(),produto.getDescricao(), produto.getUnidade(), produto.getPreco(), produto.getFoto(),
+                        produto.getStatus(), produto.getLatitude(), produto.getLongitude(), callbackNovoProduto);
+
             }
         });
     }
@@ -176,5 +193,23 @@ public class CadastroNovoActivity extends BaseActivity implements ImageInputHelp
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void configureNovoProdutoCallback() {
+
+          callbackNovoProduto = new Callback<String>() {
+
+            @Override
+            public void success(String resultado, Response response) {
+                dialog.dismiss();
+                Snackbar.make(findViewById(android.R.id.content).getRootView(), "Gravado com sucesso !", Snackbar.LENGTH_LONG).show();
+                finish();
+            }
+
+            @Override public void failure(RetrofitError error) {
+                dialog.dismiss();
+                Snackbar.make(findViewById(android.R.id.content).getRootView(), "Houve um problema de conexão ! Por favor verifique e tente novamente !", Snackbar.LENGTH_LONG).show();
+            }
+        };
     }
 }

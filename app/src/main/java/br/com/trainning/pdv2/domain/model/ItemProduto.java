@@ -7,15 +7,11 @@ import se.emilsjolander.sprinkles.Model;
  */
 public class ItemProduto extends Model {
 
-    private long idCompra;
+    private String idCompra;
 
-    public long getIdCompra() {
-        return idCompra;
-    }
+    public String getIdCompra() {return idCompra;}
 
-    public void setIdCompra(long idCompra) {
-        this.idCompra = idCompra;
-    }
+    public void setIdCompra(String idCompra) {this.idCompra = idCompra;}
 
     public long getIdItem() {
         return idItem;
