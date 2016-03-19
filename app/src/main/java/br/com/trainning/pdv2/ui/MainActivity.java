@@ -78,7 +78,6 @@ public class MainActivity extends BaseActivity {
 
         idCompra = Util.getUniquePsuedoID();
         carrinho = new Carrinho();
-        carrinho.setId(0);
         carrinho.setIdCompra(idCompra);
         carrinho.setEncerrada(0);
         carrinho.setEnviada(0);
@@ -382,7 +381,6 @@ public class MainActivity extends BaseActivity {
                     it.delete();
                 }
                 carrinho = new Carrinho();
-                carrinho.setId(0);
                 idCompra= Util.getUniquePsuedoID();
                 carrinho.setIdCompra(idCompra);
                 carrinho.setEnviada(0);
